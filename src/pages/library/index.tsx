@@ -1,3 +1,4 @@
+// Library Page 02/22/2025 Raihan Hafiz
 import { useState, useEffect } from 'react';
 import AssetCard from '../../components/AssetCard';
 import AssetModal from '../../components/AssetModal';
@@ -41,7 +42,7 @@ export default function LibraryPage() {
       const res = await axios.get(`/api/assets`);
       const data = res.data;
   
-      // Apply case-insensitive filtering
+
       const filteredAssets = data.filter(asset =>
         asset.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
@@ -150,9 +151,7 @@ export default function LibraryPage() {
               />
             ))}
           </div>
-      )
-      
-      }
+      )}
 
       <h1 className="font-bold text-3xl  w-full py-6">Trending</h1>
       <h6 className="text-sm mb-4 w-full text-gray-600">Most popular by community</h6>
@@ -184,6 +183,7 @@ export default function LibraryPage() {
           }}
         />
       )}
+
       {isStoryboardOpen && selectedAsset && (
         <StoryboardModal
           asset={selectedAsset}

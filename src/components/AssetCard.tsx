@@ -1,83 +1,65 @@
-// AssetCard 02/21/2025 Raihan Hafiz
+// AssetCard Component - Displays an individual asset card
+// Date: 02/21/2025
+// Author: Raihan Hafiz
+
 import axios from "axios";
-import { FiPieChart } from "react-icons/fi"; 
+import { FiPieChart } from "react-icons/fi"; // Importing an icon for the asset card
 
+// Define the props that AssetCard will receive
 interface AssetCardProps {
-    asset: any;     // in real projects, define a proper Type/Interface
-    onClick: () => void;
-    isSelected: boolean;
-    refreshAssets: () => void;
-  }
-  
-  export default function AssetCard({ asset, onClick, refreshAssets, isSelected }: AssetCardProps) {
-    const handleDelete = async (e: React.MouseEvent) => {
-      e.stopPropagation(); // Prevent opening the modal when clicking delete
-      if (!window.confirm("Are you sure you want to delete this asset?")) return;
-      
-      try {
-        await axios.delete(`/api/assets/${asset._id}`);
-        refreshAssets(); // Refresh asset list
-      } catch (error) {
-        console.error("Error deleting asset:", error);
-      }
-    };
-    return (
-      // <div
-      //   className="relative bg-white p-4 rounded shadow cursor-pointer hover:shadow-md transition"
-      //   onClick={onClick}
+  asset: any; 
+  onClick: () => void; 
+  isSelected: boolean;
+  refreshAssets: () => void;
+}
 
-      // >
+// Functional component for displaying an asset card
+export default function AssetCard({ asset, onClick, refreshAssets, isSelected }: AssetCardProps) {
 
-      //   {/* Icon Box */}
-      // <div className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-lg mr-4">
-      //   <FiPieChart className="text-gray-500 text-xl" />
-      // </div>
+  // Function to handle asset deletion
+  const handleDelete = async (e: React.MouseEvent) => {
+    e.stopPropagation(); 
 
-      // <div className="flex-1">
-      //   <h2 className="text-lg font-bold">{asset.name}</h2>
-      //   <p className="text-sm text-gray-500">{asset.description}</p>
-      //   <p className="text-sm text-gray-500">{asset.favorite?"❤️ Favorited" : ""}</p>
-      //   {/* <p className="text-xs text-gray-400 mt-2">
-      //     Created: {new Date(asset.date).toLocaleDateString()}
-      //   </p> */}
-      // </div>
-      // <button
-      // className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded hover:bg-red-600 transition"
-      // onClick={handleDelete}
-      // >
-      // Delete
-      // </button>
-      // </div>
+    if (!window.confirm("Are you sure you want to delete this asset?")) return; // Confirm before deletion
 
-      <div
-      className={`relative  flex items-center bg-gray-100 p-4 rounded shadow cursor-pointer
-        ${
-          isSelected ? " border-2 border-red-500" : "bg-gray-100"
-        } hover:shadow-md transition`}
-      onClick={onClick}
+    try {
+      await axios.delete(`/api/assets/${asset._id}`); // Send DELETE request to API
+      refreshAssets(); 
+    } catch (error) {
+      console.error("Error deleting asset:", error); // Log any errors
+    }
+  };
+
+  return (
+    <div
+      className={`relative flex items-center bg-gray-100 p-4 rounded shadow cursor-pointer
+        ${isSelected ? "border-2 border-red-500" : "bg-gray-100"} // Highlight the card if selected
+        hover:shadow-md transition`} 
+      onClick={onClick} // Handle asset selection
     >
-      {/* Icon Box */}
+
+      {/* Icon Section - Display an icon for the asset */}
       <div className="w-12 h-12 flex items-center justify-center bg-gray-300 rounded-lg mr-4">
-        <FiPieChart className="text-gray-500 text-xl" />
+        <FiPieChart className="text-gray-500 text-xl" /> 
       </div>
 
-      {/* Asset Info */}
+      {/* Asset Information - Display name, description, and favorite status */}
       <div className="flex-1">
-        <h2 className="text-md font-bold">{asset.name}</h2>
+        <h2 className="text-md font-bold">{asset.name}</h2> 
         <p className="text-sm text-gray-500">{asset.description}</p>
-        {asset.favorite && <p className="text-sm text-red-500">❤️ Favorited</p>}
+        {asset.favorite && <p className="text-sm text-red-500">❤️ Favorited</p>} 
       </div>
 
-      {/* Delete Button */}
-      {/* <button
+      {/* Delete Button - Allows user to delete the asset */}
+      <button
         className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded hover:bg-red-600 transition"
         onClick={(e) => {
-          e.stopPropagation(); // Prevents triggering onClick for asset selection
-          handleDelete(e);
+          e.stopPropagation(); 
+          handleDelete(e); // Call delete function
         }}
       >
         Delete
-      </button> */}
+      </button>
     </div>
-    );
-  }
+  );
+}

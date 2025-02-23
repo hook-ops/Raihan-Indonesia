@@ -1,3 +1,4 @@
+// Kpi Modal 02/22/2025 Raihan Hafiz
 import mongoose, { Schema, model, models } from "mongoose";
 
 const KPISchema = new Schema(
@@ -20,15 +21,15 @@ const KPISchema = new Schema(
       required: true,
     },
     visualsAvailable: {
-      type: [String], // Example: ["Bar Chart", "Pie Chart", "Line Graph"]
+      type: [String], 
       default: [],
     },
     affiliateApplicability: {
-      type: String, // Example: "Marketing", "Sales", "Finance"
+      type: String, 
       required: true,
     },
     businessQuestions: {
-      type: [String], // Example: ["How is revenue trending?", "What is customer retention?"]
+      type: [String], 
       default: [],
     },
     createdAt: {
